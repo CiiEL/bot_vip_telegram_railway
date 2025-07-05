@@ -35,7 +35,7 @@ gatilhos = {
 
 respostas_seguimento = {
     "quem_sao_as_modelos": "Você gostou de alguma modelo em especial? 😘",
-    "preco": "Com apenas R$59,90 você tem acesso completo. Quer pagar agora? 🔥",
+    "preco": "Com apenas R$19,90 você tem acesso completo. Quer pagar agora? 🔥",
     "pagamento": "Se quiser pagar via Pix, posso te mandar a chave agora mesmo 💸",
     "como_entrar": "Depois do pagamento, você recebe o link. Quer que eu te envie agora? 😉",
 }

@@ -4,15 +4,18 @@ from datetime import datetime, timedelta
 import os
 
 BASE_PATH = "conteudo"
-CHAT_ID_VIP = -4913959022
+CHAT_ID_VIP = int(os.getenv("CHAT_ID_VIP"))
+CHAT_ID_FREE = int(os.getenv("GRUPO_FREE_ID"))
+
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     msg = (
         f"Oi, {user.first_name} 😘\n\n"
-        "Bem-vindo(a) ao *Clube VIP das Modelos* 🔥\n\n"
+        "Bem-vindo(a) ao *Clube Das ++* 🔥\n\n"
         "Aqui você tem acesso a fotos e vídeos exclusivos de várias modelos — tudo num único lugar!\n\n"
-        "Digite: *quero vip* para liberar o acesso ou veja as modelos disponíveis 💋"
+        "Digite: *quero vip* para liberar o acesso ou *Modelos* e veja as modelos disponíveis 💋"
     )
     await context.bot.send_message(chat_id=update.effective_chat.id, text=msg, parse_mode="Markdown")
 
@@ -24,8 +27,8 @@ async def responder_mensagem(update: Update, context: ContextTypes.DEFAULT_TYPE)
         await update.message.reply_text(
             "🔓 *Assinatura VIP - Acesso Completo*\n\n"
             "📸 Fotos e vídeos de TODAS as modelos\n"
-            "💸 Apenas R$59,90 por mês\n\n"
-            "Formas de pagamento:\n• Pix\n• Cartão\n• Boleto\n\n"
+            "💸 Apenas R$19,90 por mês\n\n"
+            "Formas de pagamento:\n• Pix\n• Cartão\n• \n"
             "Digite: *pix* para receber a chave Pix",
             parse_mode="Markdown"
         )
@@ -33,7 +36,7 @@ async def responder_mensagem(update: Update, context: ContextTypes.DEFAULT_TYPE)
         await update.message.reply_text(
             "💰 *Pagamento via Pix*\n\n"
             "Chave Pix: `vip@conteudo.com`\n"
-            "Valor: R$59,90\n\n"
+            "Valor: R$19,90\n\n"
             "Envie o comprovante aqui mesmo após o pagamento 💋",
             parse_mode="Markdown"
         )
@@ -53,7 +56,8 @@ async def responder_mensagem(update: Update, context: ContextTypes.DEFAULT_TYPE)
             "• Debora Peixoto\n"
             "• Karol Rosalin\n"
             "• Renata Matos\n\n"
-            "Tudo incluso na sua assinatura VIP 😍",
+            "Tudo incluso na sua assinatura VIP 😍"
+            "Temos mais modelos, mas essas são as mais pedidas!\n\n",
             parse_mode="Markdown"
         )
     else:
