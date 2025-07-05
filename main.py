@@ -1,7 +1,12 @@
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 from handlers import start, responder_mensagem, descobrir_chat_id, liberar, acessar
+from dotenv import load_dotenv
+import os
 
-TOKEN = "8104465905:AAE45QOfgX6L6IpidS3kcMSgXwg8XF71obk"
+
+load_dotenv()   
+TOKEN = os.getenv("TOKEN")
+
 
 if __name__ == '__main__':
     app = ApplicationBuilder().token(TOKEN).build()

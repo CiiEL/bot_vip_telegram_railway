@@ -1,0 +1,22 @@
+# Ignora arquivos sensíveis
+.env
+
+# Ignora pastas de cache Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignora pacotes instalados (caso use virtualenv)
+venv/
+env/
+
+# Ignora arquivos do VSCode (caso use)
+.vscode/
+
+# Ignora logs
+*.log
+
+# Ignora arquivos do sistema
+.DS_Store
+Thumbs.db
