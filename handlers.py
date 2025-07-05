@@ -1,8 +1,10 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 BASE_PATH = "conteudo"
 CHAT_ID_VIP = int(os.getenv("CHAT_ID_VIP"))
 CHAT_ID_FREE = int(os.getenv("GRUPO_FREE_ID"))

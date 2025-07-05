@@ -20,3 +20,5 @@ env/
 # Ignora arquivos do sistema
 .DS_Store
 Thumbs.db
+# Ignorar todo conteúdo da pasta VIP
+conteudo/vip/
