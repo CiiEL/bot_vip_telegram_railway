@@ -1,12 +1,8 @@
 #!/bin/bash
 
-echo "🔁 Iniciando bots..."
+# Inicia os dois bots em paralelo
+python main.py &
+python mensageiro_free.py
 
-# Inicia o bot principal
-python3 main.py &
-
-# Inicia o bot do grupo free
-python3 mensageiro_free.py &
-
-# Espera ambos finalizarem (mantém o container vivo)
+# Espera os processos terminarem (evita saída imediata)
 wait
