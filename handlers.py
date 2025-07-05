@@ -71,6 +71,7 @@ async def liberar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
         await update.message.reply_text("❌ Use: /liberar @usuario")
         return
+
     user_to_invite = context.args[0]
     try:
         link = await context.bot.create_chat_invite_link(
@@ -79,8 +80,9 @@ async def liberar(update: Update, context: ContextTypes.DEFAULT_TYPE):
             expire_date=datetime.utcnow() + timedelta(hours=24),
             member_limit=1
         )
-        await update.message.reply_text(f"✅ Acesso liberado para {user_to_invite}:
-{link.invite_link}")
+        await update.message.reply_text(
+            f"✅ Acesso liberado para {user_to_invite}:\n{link.invite_link}"
+        )
     except Exception as e:
         await update.message.reply_text(f"❌ Erro ao gerar link: {e}")
 
@@ -96,8 +98,7 @@ async def acessar(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         await context.bot.send_message(
             chat_id=user_id,
-            text=f"🎉 Olá {nome}! Aqui está seu link de acesso ao grupo VIP:
-{link.invite_link}"
+            text=f"🎉 Olá {nome}! Aqui está seu link de acesso ao grupo VIP:\n{link.invite_link}"
         )
     except Exception as e:
         await update.message.reply_text(f"❌ Ocorreu um erro ao gerar seu acesso: {e}")
