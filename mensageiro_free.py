@@ -1,7 +1,6 @@
 import asyncio
 import random
-import time
-from telegram import Bot
+from telegram import Bot, InputMediaPhoto
 from dotenv import load_dotenv
 import os
 from imagens_free_links import MODELOS_IMAGENS
@@ -34,14 +33,17 @@ async def loop_envio_continuo():
         with open(ordem_path, "w", encoding="utf-8") as f:
             f.write("\n".join(ordem))
 
-        mensagem = mensagens_por_modelo.get(modelo, f"🔥 Conheça o conteúdo de *{modelo}*!\n\n💋 Esse é só um gostinho do que você encontra no nosso grupo VIP!")
+        mensagem = mensagens_por_modelo.get(
+            modelo,
+            f"🔥 Conheça o conteúdo de *{modelo}*!\n\n💋 Esse é só um gostinho do que você encontra no nosso grupo VIP!"
+        )
+
         imagens = random.sample(MODELOS_IMAGENS.get(modelo, []), k=min(3, len(MODELOS_IMAGENS.get(modelo, []))))
+        midias = [InputMediaPhoto(media=url) for url in imagens]
 
         await bot.send_message(chat_id=CHAT_ID_FREE, text=mensagem, parse_mode="Markdown")
         await asyncio.sleep(2)
-        for url in imagens:
-            await bot.send_photo(chat_id=CHAT_ID_FREE, photo=url)
-            await asyncio.sleep(5)
+        await bot.send_media_group(chat_id=CHAT_ID_FREE, media=midias)
 
         print(f"[OK] Enviado: {modelo}")
         print("[INFO] Aguardando 45 minutos para o próximo envio...\n")
