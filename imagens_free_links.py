@@ -2,67 +2,67 @@
 
 MODELOS_IMAGENS = {
     "Brenda Trindade": [
-        "https://imgur.com/ngC64nt",
-        "https://imgur.com/fNOZT43",
-        "https://imgur.com/2g2hiIO"
+       "https://postimg.cc/B8WCf0Tp",
+       "https://postimg.cc/TK5cswDh",
+       "https://postimg.cc/gwvHYT4W"
     ],
     "Thaissa Fit": [
-        "https://imgur.com/jzKcXX6",
-        "https://imgur.com/olEVZzF",
-        "https://imgur.com/za1rxvf"
+        "https://postimg.cc/dhF0bN7d",
+        "https://postimg.cc/4nry5xsW",
+        "https://postimg.cc/N5mMPv0B"
     ],
     "Giovana Genesini": [
-        "https://imgur.com/tburgPN",
-        "https://imgur.com/Lz5Vy22",
-        "https://imgur.com/9o7BjN2"
+        "https://postimg.cc/V5jQxfXG",
+        "https://postimg.cc/jLcVjMgy",
+        "https://postimg.cc/RN459kRM"
     ],
-    "HannaOwO": [
-        "https://imgur.com/BDEvVzC",
-        "https://imgur.com/IShQeP6",
-        "https://imgur.com/TDV5lXT"
-    ],
-    "Hazel Winters": [
-        "https://imgur.com/KlcgYL5",
-        "https://imgur.com/pNWED9G",
-        "https://imgur.com/uGjljfh"
-    ],
-    "Brida Nunes": [
-        "https://imgur.com/szvluoq",
-        "https://imgur.com/qaUVxTu",
-        "https://imgur.com/kiAiq9S"
-    ],
-    "Jean Grey Bianca": [
-        "https://i.imgur.com/EXEMPLO13.jpg",
-        "https://i.imgur.com/EXEMPLO14.jpg"
-    ],
-    "Feer Campos": [
-        "https://imgur.com/l7A8X1G",
-        "https://imgur.com/myvopM0",
-        "https://imgur.com/pzBtq8K"
-    ],
-    "Mari Reis": [
-        "https://imgur.com/5RpY5Yt",
-        "https://imgur.com/MCamx2U",
-        "https://imgur.com/cNkH5Gh"
-    ],
-    "Aline Farias": [
-        "https://imgur.com/TNfZ27p",
-        "https://imgur.com/Ho9Qwkc",
-        "https://imgur.com/u8foMH5"
-    ],
-    "Debora Peixoto": [
-        "https://imgur.com/PVEJNTB",
-        "https://imgur.com/8yZBMiT",
-        "https://imgur.com/4IpdImY"
-    ],
-    "Karol Rosalin": [
-        "https://imgur.com/aeKqTN5",
-        "https://imgur.com/v68Yqmj",
-        "https://imgur.com/Ff1E4fz"
-    ],
-    "Renata Matos": [
-        "https://imgur.com/QgrEpUl",
-        "https://imgur.com/JSgEnb1",
-        "https://imgur.com/lrIl3ZV"
-    ]
+     "HannaOwO": [
+        "https://postimg.cc/XBWhj592",
+        "https://postimg.cc/PpY9nyvp",
+        "https://postimg.cc/sBtqLqxC"
+     ],
+     "Hazel Winters": [
+        "https://postimg.cc/VdKYhs8y",
+        "https://postimg.cc/PCcdt6J2",
+        "https://postimg.cc/v4DQwRY4"
+     ],
+     "Brida Nunes": [
+         "https://postimg.cc/wy5zQgVG",
+         "https://postimg.cc/vxQsPk2H",
+         "https://postimg.cc/8JgDvjhv"
+     ],
+    #  "Jean Grey Bianca": [
+    #      "https://i.imgur.com/EXEMPLO13.jpg",
+    #      "https://i.imgur.com/EXEMPLO14.jpg"
+    #  ],
+     "Feer Campos": [
+         "https://postimg.cc/Z0Z4KvYt",
+         "https://postimg.cc/562J8cFs",
+         "https://postimg.cc/QVbsBNVB"
+     ],
+     "Mari Reis": [
+         "https://postimg.cc/dkFP1gYm",
+         "https://postimg.cc/SXCbmkwx",
+         "https://postimg.cc/zy91mV2Q"
+     ],
+     "Aline Farias": [
+         "https://postimg.cc/bdYWBxNJ",
+         "https://postimg.cc/9RbSfM1C",
+         "https://postimg.cc/Wq4yqvfr"
+     ],
+     "Debora Peixoto": [
+         "https://postimg.cc/1gc7Wtkw",
+         "https://postimg.cc/HJCP45hT",
+         "https://postimg.cc/mP95HVVd"
+     ],
+     "Karol Rosalin": [
+         "https://postimg.cc/gx3gJjkQ",
+         "https://postimg.cc/KR69xBFt",
+         "https://postimg.cc/QH9620LX"
+     ],
+     "Renata Matos": [
+         "https://postimg.cc/TL30Ccqv",
+         "https://postimg.cc/8fFHVP0y",
+         "https://postimg.cc/1n7HTNJn"
+     ]
 }

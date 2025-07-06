@@ -1,47 +1,46 @@
-from pathlib import Path
-import random
 import asyncio
+import random
+import time
 from telegram import Bot
 from dotenv import load_dotenv
 import os
-
-# Carrega variáveis de ambiente
-load_dotenv()
-TOKEN = os.getenv("TOKEN")
-GRUPO_FREE_ID = int(os.getenv("GRUPO_FREE_ID"))
-
-# Imagens hospedadas no Imgur
 from imagens_free_links import MODELOS_IMAGENS
+from mensagens_free import mensagens_por_modelo
+
+load_dotenv()
+
+TOKEN = os.getenv("TOKEN")
+CHAT_ID_FREE = int(os.getenv("GRUPO_FREE_ID"))
 
 bot = Bot(token=TOKEN)
 
 # Lista de modelos sem repetição
-ordem_path = Path(".ordem_free.txt")
-if not ordem_path.exists():
+ordem_path = ".ordem_free.txt"
+
+if not os.path.exists(ordem_path):
     ordem = list(MODELOS_IMAGENS.keys())
     random.shuffle(ordem)
-    ordem_path.write_text("\n".join(ordem), encoding="utf-8")
+    with open(ordem_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(ordem))
 else:
-    ordem = ordem_path.read_text(encoding="utf-8").splitlines()
+    with open(ordem_path, "r", encoding="utf-8") as f:
+        ordem = f.read().splitlines()
 
 modelo = ordem.pop(0)
 ordem.append(modelo)
-ordem_path.write_text("\n".join(ordem), encoding="utf-8")
 
-mensagem = (
-    f"🔥 Conheça o conteúdo de *{modelo}*!\n\n"
-    "💋 Esse é só um gostinho do que você encontra no nosso grupo VIP!\n"
-    "Aproveite e veja o que temos disponível.\n\n"
-    "_Tem mais alguma que te interessa? Sugira! Aceitamos pedidos para o próximo post!_"
-)
+with open(ordem_path, "w", encoding="utf-8") as f:
+    f.write("\n".join(ordem))
 
-imagens = MODELOS_IMAGENS.get(modelo, [])
+mensagem = mensagens_por_modelo.get(modelo, f"🔥 Conheça o conteúdo de *{modelo}*!\n\n💋 Esse é só um gostinho do que você encontra no nosso grupo VIP!")
+
+imagens = random.sample(MODELOS_IMAGENS.get(modelo, []), k=min(3, len(MODELOS_IMAGENS.get(modelo, []))))
 
 async def enviar_mensagem_com_imagens():
-    await bot.send_message(chat_id=GRUPO_FREE_ID, text=mensagem, parse_mode="Markdown")
+    await bot.send_message(chat_id=CHAT_ID_FREE, text=mensagem, parse_mode="Markdown")
     await asyncio.sleep(2)
     for url in imagens:
-        await bot.send_photo(chat_id=GRUPO_FREE_ID, photo=url)
+        await bot.send_photo(chat_id=CHAT_ID_FREE, photo=url)
         await asyncio.sleep(5)
 
 if __name__ == "__main__":
