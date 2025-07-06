@@ -2,6 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 import os
 
 load_dotenv()
@@ -13,13 +14,29 @@ CHAT_ID_FREE = int(os.getenv("GRUPO_FREE_ID"))
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
+
+    keyboard = [
+        [InlineKeyboardButton("📂 Entrar no Grupo Free", url="https://t.me/+Cv-z4vh0Q5o5NDcx")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     msg = (
         f"Oi, {user.first_name} 😘\n\n"
         "Bem-vindo(a) ao *Clube Das ++* 🔥\n\n"
-        "Aqui você tem acesso a fotos e vídeos exclusivos de várias modelos — tudo num único lugar!\n\n"
+        "🎁 Temos um *Grupo Free* com conteúdos selecionados pra você conhecer o que oferecemos.\n"
+        "Clique no botão abaixo para entrar 👇\n\n"
+        "👑 E no nosso *VIP* você tem acesso a fotos e vídeos exclusivos de várias modelos — tudo num único lugar!\n\n"
         "Digite: *quero vip* para liberar o acesso ou *Modelos* e veja as modelos disponíveis 💋"
     )
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=msg, parse_mode="Markdown")
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=msg,
+        parse_mode="Markdown",
+        reply_markup=reply_markup,
+        disable_web_page_preview=True
+    )
+
 
 async def responder_mensagem(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto = update.message.text.lower()
