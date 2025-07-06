@@ -1,75 +1,48 @@
-import asyncio
+from pathlib import Path
 import random
-import os
-from datetime import datetime, time, timedelta
+import asyncio
 from telegram import Bot
 from dotenv import load_dotenv
+import os
 
-# Carrega as variáveis do .env
+# Carrega variáveis de ambiente
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
-CHAT_ID_FREE = int(os.getenv("GRUPO_FREE_ID"))
+GRUPO_FREE_ID = int(os.getenv("GRUPO_FREE_ID"))
 
-modelos = [
-    "HannaOwO", "Hazel Winters", "Brida Nunes", "Jean Grey Bianca", "Brenda Trindade",
-    "Feer Campos", "Giovana Genesini", "Mari Reis", "Thaissa Fit", "Aline Farias",
-    "Debora Peixoto", "Karol Rosalin", "Renata Matos"
-]
+# Imagens hospedadas no Imgur
+from imagens_free_links import MODELOS_IMAGENS
 
 bot = Bot(token=TOKEN)
 
-# === MENSAGEM GERADA ===
-def gerar_mensagem(hora, modelo):
-    comum = (
-        f"💋 Hoje é dia de *{modelo}* no nosso grupo!\n\n"
-        "Conteúdo exclusivo no grupo VIP 🔥\n"
-        "Assinatura: R$19,90/mês - Acesso completo!\n"
-        "Pix: vip@conteudo.com\n\n"
-        "Tem mais alguma que te interessa?\n"
-        "Desfrute das que temos e sugira as que você gosta!\n"
-        "Aceitamos pedidos para post! 💌"
-    )
+# Lista de modelos sem repetição
+ordem_path = Path(".ordem_free.txt")
+if not ordem_path.exists():
+    ordem = list(MODELOS_IMAGENS.keys())
+    random.shuffle(ordem)
+    ordem_path.write_text("\n".join(ordem), encoding="utf-8")
+else:
+    ordem = ordem_path.read_text(encoding="utf-8").splitlines()
 
-    especiais = {
-        8: f"☀️ Bom dia, Clube das ++!\n\nComeçando a manhã com a maravilhosa *{modelo}* 😍\n\n",
-        12: f"🍽️ Hora do almoço, mas também de aproveitar a *{modelo}*!\n\n",
-        13: f"🥵 Já viu a *{modelo}* hoje? Se não, aproveita agora!\n\n",
-        22: f"🌙 Fechando o dia com chave de ouro...\nHoje a estrela é *{modelo}* 💫\n\n"
-    }
+modelo = ordem.pop(0)
+ordem.append(modelo)
+ordem_path.write_text("\n".join(ordem), encoding="utf-8")
 
-    return especiais.get(hora, "") + comum
+mensagem = (
+    f"🔥 Conheça o conteúdo de *{modelo}*!\n\n"
+    "💋 Esse é só um gostinho do que você encontra no nosso grupo VIP!\n"
+    "Aproveite e veja o que temos disponível.\n\n"
+    "_Tem mais alguma que te interessa? Sugira! Aceitamos pedidos para o próximo post!_"
+)
 
-# === AGENDA DE MENSAGENS ===
-async def agendador():
-    print("⏰ Agendador iniciado.")
-    proxima = datetime.now().replace(minute=0, second=0, microsecond=0)
+imagens = MODELOS_IMAGENS.get(modelo, [])
 
-    if proxima.time() < time(8, 0):
-        proxima = proxima.replace(hour=8)
-    elif proxima.time() > time(22, 0):
-        proxima = proxima.replace(hour=8) + timedelta(days=1)
-    else:
-        proxima += timedelta(hours=1)
+async def enviar_mensagem_com_imagens():
+    await bot.send_message(chat_id=GRUPO_FREE_ID, text=mensagem, parse_mode="Markdown")
+    await asyncio.sleep(2)
+    for url in imagens:
+        await bot.send_photo(chat_id=GRUPO_FREE_ID, photo=url)
+        await asyncio.sleep(5)
 
-    while True:
-        agora = datetime.now()
-        if agora >= proxima:
-            modelo = random.choice(modelos)
-            mensagem = gerar_mensagem(proxima.hour, modelo)
-
-            try:
-                await bot.send_message(chat_id=CHAT_ID_FREE, text=mensagem, parse_mode="Markdown")
-                print(f"✅ Enviada às {proxima.hour}h: {modelo}")
-            except Exception as e:
-                print(f"❌ Erro ao enviar: {e}")
-
-            # Define próximo horário
-            proxima += timedelta(hours=1)
-            if proxima.hour > 22:
-                proxima = proxima.replace(hour=8) + timedelta(days=1)
-
-        await asyncio.sleep(30)
-
-# === EXECUÇÃO PRINCIPAL ===
 if __name__ == "__main__":
-    asyncio.run(agendador())
+    asyncio.run(enviar_mensagem_com_imagens())

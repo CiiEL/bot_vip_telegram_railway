@@ -1,48 +1,62 @@
 import os
-from dotenv import load_dotenv
-from datetime import time
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from telegram import Bot
 import asyncio
+import random
+from dotenv import load_dotenv
+from telegram import Bot
 
-# Carrega variáveis de ambiente
 load_dotenv()
+
 TOKEN = os.getenv("TOKEN")
 CHAT_ID_VIP = int(os.getenv("CHAT_ID_VIP"))
-
-# Caminho dos arquivos
 CAMINHO_VIP = "conteudo/vip"
 
-async def enviar_conteudo_vip():
-    bot = Bot(token=TOKEN)
+bot = Bot(token=TOKEN)
 
-    if not os.path.exists(CAMINHO_VIP):
-        print("❌ Pasta de conteúdo VIP não encontrada.")
+mensagens_chamada = [
+    "😈 Conteúdo quente no ar! Se liga nessa sequência...",
+    "💋 As modelos mandaram ver hoje... dá uma olhada:",
+    "🔥 Atualização VIP fresquinha só pros verdadeiros assinantes.",
+    "📸 Curtiram o último drop? Esse aqui tá ainda melhor!",
+    "🥵 Vem que essa sequência tá imperdível..."
+]
+
+def gerar_mensagem_vip():
+    return random.choice(mensagens_chamada)
+
+async def enviar_conteudo_vip():
+    arquivos = os.listdir(CAMINHO_VIP)
+    imagens = [a for a in arquivos if a.lower().endswith((".jpg", ".jpeg", ".png"))][:10]
+    videos = [a for a in arquivos if a.lower().endswith((".mp4", ".mov", ".mkv"))][:5]
+
+    if not imagens and not videos:
+        print("Nenhum conteúdo encontrado para enviar.")
         return
 
-    arquivos = os.listdir(CAMINHO_VIP)
-    fotos = [f for f in arquivos if f.lower().endswith((".jpg", ".jpeg", ".png"))][:10]
-    videos = [f for f in arquivos if f.lower().endswith((".mp4", ".mov", ".avi"))][:5]
+    await bot.send_message(chat_id=CHAT_ID_VIP, text=gerar_mensagem_vip())
 
-    for f in fotos:
-        caminho = os.path.join(CAMINHO_VIP, f)
-        with open(caminho, "rb") as img:
+    for arquivo in imagens:
+        caminho = os.path.join(CAMINHO_VIP, arquivo)
+        with open(caminho, 'rb') as img:
             await bot.send_photo(chat_id=CHAT_ID_VIP, photo=img)
+        await asyncio.sleep(15)
 
-    for v in videos:
-        caminho = os.path.join(CAMINHO_VIP, v)
-        with open(caminho, "rb") as vid:
+    for arquivo in videos:
+        caminho = os.path.join(CAMINHO_VIP, arquivo)
+        with open(caminho, 'rb') as vid:
             await bot.send_video(chat_id=CHAT_ID_VIP, video=vid)
+        await asyncio.sleep(15)
 
-    print("✅ Conteúdo VIP enviado com sucesso.")
+async def executar_postagens():
+    print("Enviando postagem VIP 1...")
+    await enviar_conteudo_vip()
+    await asyncio.sleep(900)  # 15 min = 900s
 
-def main():
-    scheduler = AsyncIOScheduler()
-    scheduler.add_job(enviar_conteudo_vip, "cron", hour=10)
-    scheduler.add_job(enviar_conteudo_vip, "cron", hour=15)
-    scheduler.add_job(enviar_conteudo_vip, "cron", hour=21)
-    scheduler.start()
-    asyncio.get_event_loop().run_forever()
+    print("Enviando postagem VIP 2...")
+    await enviar_conteudo_vip()
+    await asyncio.sleep(900)  # +15 min
 
-if __name__ == "__main__":
-    main()
+    print("Enviando postagem VIP 3...")
+    await enviar_conteudo_vip()
+
+if __name__ == '__main__':
+    asyncio.run(executar_postagens())
